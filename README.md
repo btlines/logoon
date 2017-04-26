@@ -1,3 +1,8 @@
+[![Build status](https://api.travis-ci.org/btlines/logoon.svg?branch=master)](https://travis-ci.org/btlines/logoon)
+[![codecov](https://codecov.io/gh/btlines/logoon/branch/master/graph/badge.svg)](https://codecov.io/gh/btlines/logoon)
+[![License](https://img.shields.io/:license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+
 # Logoon
 Rethinking logging on the JVM
 
