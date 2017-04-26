@@ -12,3 +12,11 @@ libraryDependencies ++= Seq(
 )
 
 parallelExecution in Test := false
+
+organization := "beyondthelines"
+
+licenses := ("MIT", url("http://opensource.org/licenses/MIT")) :: Nil
+
+bintrayOrganization := Some("beyondthelines")
+
+bintrayPackageLabels := Seq("scala")
