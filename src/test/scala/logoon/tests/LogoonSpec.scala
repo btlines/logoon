@@ -1,7 +1,7 @@
 package logoon.tests
 
 import logoon.LogContext
-import logoon.LogLevel.{DEBUG, ERROR, INFO, OFF}
+import logoon.LogLevel._
 import org.scalatest.{Matchers, WordSpecLike}
 
 class LogoonSpec extends WordSpecLike with Matchers with LogServiceFixture {
@@ -79,6 +79,38 @@ class LogoonSpec extends WordSpecLike with Matchers with LogServiceFixture {
         Map("log.service" -> "multi-loggers")
       )
       log.logger.loggedMessages shouldBe List(firstMessage, secondMessage)
+    }
+    "log messages at different levels" in withLogging("multi-loggers", ALL) { log =>
+      log.fatal("Fatal message")
+      log.error("Error message")
+      log.warn("Warning message")
+      log.info("Info message")
+      log.debug("Debug message")
+      log.trace("Trace message")
+      log.logger.loggedMessages.size shouldBe 6
+    }
+    "log messages with exceptions at different levels" in withLogging("multi-loggers", ALL) { log =>
+      val exception = new Exception("I am expected")
+      log.fatal("Fatal message", exception)
+      log.error("Error message", exception)
+      log.warn("Warning message", exception)
+      log.info("Info message", exception)
+      log.debug("Debug message", exception)
+      log.trace("Trace message", exception)
+      log.logger.loggedMessages.size shouldBe 6
+    }
+  }
+  "LogContext" should {
+    "Add new entry" in {
+      val context = LogContext.empty + ("testname" -> "Add entry") + ("classname" -> classOf[LogoonSpec].getName)
+      context.entries.size shouldBe 2
+    }
+    "Remove existing entry" in {
+      val context = LogContext(
+        "testname" -> "Add entry",
+        "classname" -> classOf[LogoonSpec].getName
+      ) - "testname"
+      context.entries.size shouldBe 1
     }
   }
 }
